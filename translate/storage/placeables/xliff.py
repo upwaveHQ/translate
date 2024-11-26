@@ -18,6 +18,7 @@
 
 """Contains XLIFF-specific placeables."""
 
+from xml.etree import ElementTree
 from translate.storage.placeables import base
 from translate.storage.placeables.strelem import StringElem
 
@@ -66,7 +67,14 @@ class Ex(base.Ex):
 
 
 class X(base.X):
-    pass
+    def __str__(self):
+        """
+        String representation of the X node. Needed to keep interpolation in source strings.
+        """
+        node = ElementTree.Element("x")
+        node.attrib = dict(self.xml_attrib)
+
+        return ElementTree.tostring(x, encoding="utf-8", method="xml").decode("utf-8")
 
 
 class Sub(base.Sub):
