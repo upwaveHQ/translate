@@ -74,7 +74,7 @@ class X(base.X):
         node = ElementTree.Element("x")
         node.attrib = dict(self.xml_attrib)
 
-        return ElementTree.tostring(x, encoding="utf-8", method="xml").decode("utf-8")
+        return ElementTree.tostring(node, encoding="utf-8", method="xml").decode("utf-8")
 
 
 class Sub(base.Sub):
