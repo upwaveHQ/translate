@@ -107,8 +107,14 @@ class xliffunit(lisa.LISAunit):
         langset = etree.Element(self.namespaced(purpose))
         # TODO: check language
         # setXMLlang(langset, lang)
-
-        safely_set_text(langset, text)
+        
+        # In order to not escape interpolation target tags,
+        # we need to parse the target string
+        if purpose == 'source':
+            safely_set_text(langset, text)
+        else:
+            langset = etree.fromstring(f'<{purpose}>{text}</{purpose}>')
+            langset.tag = self.namespaced(purpose)
 
         return langset
 
